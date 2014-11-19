@@ -1,0 +1,208 @@
+<%#include(../layout/bootv3.html)%>
+<%##
+<%#head%>
+<title>移动热力系统</title>
+<link href="http://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/ui.datepicker.css" type="text/css" media="screen" />
+<style type="text/css">
+	iframe {
+		width: 320px;
+		height: 1000px;
+		border: none;
+	}
+	#heatmapContainer{
+		width: 320px;
+		height: 1000px;
+		border: none;
+		position: absolute;
+		top:0px;
+		left: 15px;
+	}
+	.frm_tips{
+		height:20px;
+		color:red;
+	}
+	.alert {
+		width: 300px;
+		height: 30px;
+		padding-top: 5px;
+		margin: 10px auto;
+		display: none
+	}
+	.divDragArea {
+		border: solid 1px white;
+		visibility: visible;
+		position: absolute;
+		color: black;
+		font-size: 12px;
+		text-align: center;
+		-webkit-user-select: none;
+		background-color: rgb(219, 219, 219);
+		opacity: 0.7;
+	}
+	.operationZone{
+		position: absolute;
+		top: 0px;
+		margin-left: 350px;
+	}
+</style>
+<%#/head%>
+
+<%#main%>
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      	<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+      	</button>
+      	<a class="navbar-brand" href="#">移动热力图系统</a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      	<ul class="nav navbar-nav">
+	        <li ><a href="/test?t=heatmap/list">业务列表</a></li>
+	        <li class="active"><a href="/view_heat_map?action=index">业务查看</a></li>
+	        <!-- <li class=""><a href="/test?t=heatmap/info">系统说明</a></li> -->
+	        <!-- <li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">其他操作（暂无） <span class="caret"></span></a>
+				<ul class="dropdown-menu" role="menu">
+					<li><a href="#">Action</a></li>
+					<li><a href="#">Another action</a></li>
+					<li><a href="#">Something else here</a></li>
+					<li class="divider"></li>
+					<li><a href="#">Separated link</a></li>
+					<li class="divider"></li>
+					<li><a href="#">One more separated link</a></li>
+				</ul>
+	        </li> -->
+      	</ul>
+      	<!-- <form class="navbar-form navbar-left" role="search">
+	        <div class="form-group">
+	          	<input type="text" class="form-control" placeholder="Search">
+	        </div>
+	        <button type="submit" class="btn btn-default">Submit</button>
+	    </form>
+		<ul class="nav navbar-nav navbar-right">
+			<li><a href="#">Link</a></li>
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+				<ul class="dropdown-menu" role="menu">
+					<li><a href="#">Action</a></li>
+					<li><a href="#">Another action</a></li>
+					<li><a href="#">Something else here</a></li>
+					<li class="divider"></li>
+					<li><a href="#">Separated link</a></li>
+				</ul>
+			</li>
+		</ul> -->
+    </div>
+  </div>
+</nav>
+<div class="row">
+  	<div class="col-md-1"></div>
+  	<div class="col-md-10">
+	  	<form class="form-inline" role="form" id="searchForm">
+		  	<div class="form-group">
+		    	<label class="sr-only" for="">业务选择</label>
+		    	<select class="form-control" name="url_id" id="url_id">
+			 		<!-- <option value="">业务选择</option> -->
+			  		
+				</select>
+				
+		  	</div>
+		  	<!-- <div class="form-group">
+		    	<label class="sr-only" for="">链接地址</label>
+		    	<input type="text" class="form-control" id="url" placeholder="链接地址" name="url">
+		    	
+		  	</div> -->
+		  	<div class="form-group">
+		    	<label class="sr-only" for=""></label>
+		    	<select class="form-control" name="os">
+			  		<!-- <option value="">操作系统</option> -->
+			  		
+			  		<option value="iphone">ios</option>
+			  		<option value="android">android</option>
+			  		<option value="windows">windows</option>
+				</select>
+				
+		  	</div>
+		  	<div class="form-group">
+			    <label class="sr-only" for=""></label>
+			    <select class="form-control" name="width">
+					<!-- <option value="">页面宽度</option> -->
+					<option value="320">320px</option>
+					<option value="360">360px</option>
+					<option value="400">400px</option>
+					<option value="480">480px</option>
+					<option value="540">540px</option>
+					<option value="640">640px</option>
+					<option value="768">768px</option>
+					<option value="1024">1024px</option>
+					<option value="1366">1366px</option>
+					<option value="1440">1440px</option>
+				</select>
+				
+			</div>
+		  	<div class="form-group datetimepicker">		    	
+		      		<input class="form-control" type="text" placeholder="开始时间" name="begin_date">
+		  	</div>
+		  	<div class="form-group datetimepicker">
+		    	
+		      		<input class="form-control" type="text" placeholder="结束时间" name="end_date">
+		    	
+		    	
+		  	</div>
+		  	<div class="form-group">
+		    	<button type="button" class="btn btn-default" id="search">检索</button>
+		  		<!-- <button type="button" class="btn btn-default" id="clearHeatmap">清除热力图</button> -->
+		  		<button type="button" class="btn btn-default" id="clearSelector">清除选区</button>
+		  	</div>
+		  	<div id="tips">
+			  	<div class="alert alert-danger  alert-dismissible fade in" role="alert">
+					<button type="button" class="close" data-dismiss="alert">
+						<span aria-hidden="true">×</span>
+						<span class="sr-only">Close</span>
+					</button>
+					<strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.
+				</div>
+			</div>
+		  	
+		</form>
+		<div class="row" style="padding-top:10px">
+			<div class="col-md-12">
+				<iframe id="siframe" src="" marginwidth="0"></iframe>
+				<div id="heatmapContainer">
+				</div>
+			
+				<div class="operationZone">
+					<div >
+						<h3>操作说明：</h3>
+						<p>1、建议使用chrome浏览器查看</p>
+						<p>2、每天凌晨对昨天之前的数据进行计算，所以暂无今天的数据</p>
+						<p>3、红色->黄色->绿色->蓝色->无色 为点击由多到少的分布趋势</p>
+						<p>4、可在热力图上划框查看具体某些位置的点击次数</p>
+					</div>
+
+					<div class="" style="display:none" id="totalCount">
+						本条件下的总点击次数是：<span id="count_num">0</span>
+					</div>			
+				</div>
+			</div>
+		</div>
+  	</div>
+	<div class="col-md-1"></div>
+</div>
+<%#/main%>
+
+<%#script%>
+<script type="text/javascript"><%#include(./heatmap.js)%></script>
+<script type="text/javascript">
+DATA = {
+    t:[]
+}
+seajs.use("main/heatmap/main");
+</script>
+</div>
+<%#/script%>
