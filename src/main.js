@@ -9,13 +9,13 @@ define(function(require) {
 		heatmap,
 		businessdData = {
 			10001 : {
-				url : 'http://mp.weixin.qq.com/mp/lifedetail?action=list&bid=dianping_1916992',
-				name : '微信poi'
-			}/*,
+				url : 'url1',
+				name : '业务1'
+			},
 			10002 : {
-				url : 'http://mp.weixin.qq.com/mp/lifedetail?action=list&bid=dianping_1916992&uin=NzQ4NTIxNQ%3D%3D&key=dcce3f7f97fcd78b7f43988ac09258e3b231ee7cf1a080e53797091db9f91b13b8ca58de0d2bbff363744b44b7893515&devicetype=Windows-QQBrowser&version=61000901&lang=zh_CN&pass_ticket=gI3%2FCMLGwSZc0ENVxsVjy8nbOsqqOyqUJpoMaIbKCBM%3D',
-				name : '微信poi-团购列表页'
-			}*/
+				url : 'url2',
+				name : '业务2'
+			}
 		}
 
 	legendCanvas.width = 100;
