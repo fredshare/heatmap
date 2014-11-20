@@ -1,0 +1,213 @@
+<%#include(../layout/bootv3.html)%>
+<%##
+<%#head%>
+<title>移动热力系统</title>
+<link href="http://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/ui.datepicker.css" type="text/css" media="screen" />
+<style type="text/css">
+	iframe {
+		width: 320px;
+		height: 1000px;
+		border: none;
+	}
+	#heatmapContainer{
+		width: 320px;
+		height: 1000px;
+		border: none;
+		position: absolute;
+		top:0px;
+		left: 15px;
+	}
+	.frm_tips{
+		height:20px;
+		color:red;
+	}
+	.alert {
+		width: 300px;
+		height: 30px;
+		padding-top: 5px;
+		margin: 10px auto;
+		display: none
+	}
+
+</style>
+<%#/head%>
+
+<%#main%>
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      	<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+      	</button>
+      	<a class="navbar-brand" href="#">移动热力图系统</a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      	<ul class="nav navbar-nav">
+	        <li class="active"><a href="/test?t=heatmap/list">业务列表</a></li>
+	        <li ><a href="/test?t=heatmap/index">业务查看</a></li>
+	        <!-- <li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">其他操作（暂无） <span class="caret"></span></a>
+				<ul class="dropdown-menu" role="menu">
+					<li><a href="#">Action</a></li>
+					<li><a href="#">Another action</a></li>
+					<li><a href="#">Something else here</a></li>
+					<li class="divider"></li>
+					<li><a href="#">Separated link</a></li>
+					<li class="divider"></li>
+					<li><a href="#">One more separated link</a></li>
+				</ul>
+	        </li> -->
+      	</ul>
+      	<!-- <form class="navbar-form navbar-left" role="search">
+	        <div class="form-group">
+	          	<input type="text" class="form-control" placeholder="Search">
+	        </div>
+	        <button type="submit" class="btn btn-default">Submit</button>
+	    </form>
+		<ul class="nav navbar-nav navbar-right">
+			<li><a href="#">Link</a></li>
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+				<ul class="dropdown-menu" role="menu">
+					<li><a href="#">Action</a></li>
+					<li><a href="#">Another action</a></li>
+					<li><a href="#">Something else here</a></li>
+					<li class="divider"></li>
+					<li><a href="#">Separated link</a></li>
+				</ul>
+			</li>
+		</ul> -->
+    </div>
+  </div>
+</nav>
+<div class="row">
+  	<div class="col-md-1"></div>
+  	<div class="col-md-10">
+  		<div class="col-md-8">
+	  		<form class="form-horizontal" role="form">
+				<div class="form-group">
+					<label class="col-sm-2 control-label">业务id</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" name="businessId" value="10101">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="name" class="col-sm-2 control-label">业务名称</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="name" placeholder="name" name="name">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="description" class="col-sm-2 control-label">业务描述</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="description" placeholder="description" name="description">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="owner" class="col-sm-2 control-label">负责人</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="owner" placeholder="owner" name="owner">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="url" class="col-sm-2 control-label">业务链接</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="url" placeholder="url" name="url">
+					</div>
+				</div>
+				<div id="hashContainer">
+				</div>
+				<script type="text/html" id="hash_tpl">
+					<div class="form-group">
+						<label for="hash_{#data.id#}" class="col-sm-2 control-label">hash页面{#i#}</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control hash" id="hash_{#data.id#}" data-id="{#data.id#}" placeholder="hashName" name="hash_{#data.id#}" value="{#data.name#}">
+						</div>
+						<div class="col-sm-2">						
+							<label for="hash_{#data.id#}" class="control-label">
+								<a href="javascript:;" id="{#data.id#}" class="del">删除</a>
+							</label>
+						</div>
+					</div>
+				</script>
+				<div class="form-group">
+					<label for="hash_2" class="col-sm-2 control-label"></label>
+					<div class="col-sm-10">
+						<button type="button" class="btn btn-primary" id="add">新增hash页面</button>
+						<button type="button" class="btn btn-primary" id="generate">生成上报代码</button>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="url" class="col-sm-2 control-label">页面代码</label>
+					<div class="col-sm-10">
+					<pre><code id="code">
+						</code></pre>
+						<!-- <textarea  class="form-control" id="code" placeholder="code" name="code"></textarea> -->
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="hash_2" class="col-sm-2 control-label"></label>
+					<div class="col-sm-10">
+						<button type="button" class="btn btn-primary" id="save">提交</button>
+
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="col-md-2">
+		</div>
+  	</div>
+	<div class="col-md-1"></div>
+</div>
+<%#/main%>
+
+<%#script%>
+<script type="text/html" id="code_tpl">
+//热力图上报
+(function(){
+    //确定url_id
+    var hash = location.hash,urlId = {#initId#};
+    function initHash(){
+    	var hash = location.hash;
+    	if(hash == "#"){
+    		urlId = {#initId#};
+    	}{#each data as item i#}
+    	else if(hash == "{#item.name#}"){
+    		urlId = {#item.id#};
+    	}{#/each#}
+    	else {
+    		urlId = {#initId#};
+    	}
+    }
+	initHash();  
+    window.addEventListener("hashchange",function(){
+    	initHash();
+    	loadHeatmapJsBack();
+    });
+    //动态载入热力图js
+    var s = document.createElement("script");
+    s.src = "http://res.wx.qq.com/mmbizwap/en_US/htmledition/js/report/heatmapReport.js";//热力图js的cdn路径;
+    s.onload =loadHeatmapJsBack;
+    document.getElementsByTagName("head")[0].appendChild(s);
+    //载入热力图js后回调
+    function loadHeatmapJsBack(){
+        if(window.HeatmapReport){
+            HeatmapReport.init({
+                url_id:urlId,
+                radius:4//收归半径4*4
+            });
+        }
+    }
+})();
+</script>
+<script type="text/javascript">
+DATA = {
+    t:[]
+}
+seajs.use("main/heatmap/apply");
+</script>
+<%#/script%>
