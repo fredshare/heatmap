@@ -9,6 +9,7 @@ heatmap
 > 什么是热力图监控？
 
 以特殊高亮的形式显示访客热衷的页面区域和访客所在的地理区域的图示。例如
+
 ![image](https://cloud.githubusercontent.com/assets/765082/5545741/48abb118-8b67-11e4-981c-4b82e50941f4.png)
 
 > 为什么要做热力图监控?
@@ -16,7 +17,9 @@ heatmap
 + 直观清楚地看到页面上每一个区域的访客兴趣焦点，无须报告数据分析，图形化展现，无需任何页面分析经验；
 + 能够框出任意区域的访问详情，如来源、搜索引擎、搜索词、关键词、浏览器等在核心区域的点击情况一目了然，投资回报比清清楚楚
 + 移动端有自身的特性：根据os、ua、屏幕大小导致页面功能模块、区域不一样，如果只存储坐标数据，导致页面热力图数据不准确，比如
+
 ![image](https://cloud.githubusercontent.com/assets/765082/5545750/7129f8de-8b67-11e4-862f-0c39a78c86ea.png)
 
 + 移动端页面经常有spa的开发模式，需要以带hash的url为key来进行数据区分存储，但是ta只能也url为key存储，导致多个页面的热力数据混杂在一起，再比如
+
 ![image](https://cloud.githubusercontent.com/assets/765082/5545754/8a2c31bc-8b67-11e4-8fff-33c2aee45c83.png)
