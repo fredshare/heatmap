@@ -36,3 +36,7 @@
 * 前台展示热力图：
   * 按照业务ID（对应带hash的链接）进行搜索；
   * 用时间、ua、屏幕大小进行过滤搜索；
+
+> 系统效果
+
+![image](https://cloud.githubusercontent.com/assets/765082/5552121/02042882-8c28-11e4-9b07-aeca6fdc92a5.png)
